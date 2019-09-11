@@ -1,0 +1,188 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "940282dd-ad85-40c0-a63a-37032dcc6970": {
+        "id": "940282dd-ad85-40c0-a63a-37032dcc6970",
+        "parent": null,
+        "name": "testElastic",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "85638c52-b676-47f3-8ad9-f8e75f244e0b",
+          "dcbe1561-c152-44bc-942a-730e5eb05d38"
+        ],
+        "isRemovable": false,
+        "filePath": "testElastic"
+      },
+      "85638c52-b676-47f3-8ad9-f8e75f244e0b": {
+        "id": "85638c52-b676-47f3-8ad9-f8e75f244e0b",
+        "parent": "940282dd-ad85-40c0-a63a-37032dcc6970",
+        "name": "lambda.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "testElastic/lambda.js",
+        "code": "let SL_REDIS = require('slappforge-sdk-redis');\nlet clusterManager = require('./ClusterManager');\nconst redis = new SL_REDIS.Redis(clusterManager);\n\nexports.handler = function (event, context, callback) {\n    // You must always quit the redis client after it's used\n    redis.type({\n        clusterIdentifier: 'clusterindunil',\n        params: ['1']\n    }, function (error, response, redisClient) {\n        if (error) {\n            console.log(\"errorrr\");\n             console.log(error);\n            callback(error);\n        } else {\n             console.log(\"redisClient\");\n             console.log(redisClient);\n            //redisClient.quit();\n        }\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": [
+          {
+            "resourceName": "apigeuWest1IrelandIndunilindunilirelandany",
+            "config": {}
+          }
+        ]
+      },
+      "dcbe1561-c152-44bc-942a-730e5eb05d38": {
+        "id": "dcbe1561-c152-44bc-942a-730e5eb05d38",
+        "parent": "940282dd-ad85-40c0-a63a-37032dcc6970",
+        "name": "ClusterManager.js",
+        "type": "JS_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "testElastic/ClusterManager.js",
+        "code": "module.exports = function() {\n    this.clusters = [];\n\n    this.clusters[\"clusterindunil\"] = {\n        host: process.env.EndPoint_redisClusterindunil,\n        port: 6379,\n        clusterModeEnabled: false\n    };\n};"
+      }
+    },
+    "rootNode": "940282dd-ad85-40c0-a63a-37032dcc6970",
+    "openFiles": [
+      "85638c52-b676-47f3-8ad9-f8e75f244e0b"
+    ],
+    "currentFileId": "85638c52-b676-47f3-8ad9-f8e75f244e0b",
+    "resources": {
+      "apigeuWest1IrelandIndunilindunilirelandany": {
+        "name": "apigeuWest1IrelandIndunilindunilirelandany",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "eu-west-1",
+          "apiMode": 0,
+          "apiName": "IrelandIndunil",
+          "endpointType": "REGIONAL",
+          "resourceMode": 0,
+          "resourceName": "indunil/ireland",
+          "resourcePath": "/indunil/ireland",
+          "restMethod": "ANY",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "Test",
+          "mode": 0
+        }
+      },
+      "redis-clusterindunil": {
+        "name": "redis-clusterindunil",
+        "type": "Redis",
+        "config": {
+          "clusterConfig": {
+            "engineType": "redis",
+            "clusterSpec": {
+              "instanceFamily": "t2",
+              "nodeTypeClass": "cache.t2.micro",
+              "engineVersion": "5.0.4",
+              "clusterModeEnabled": false,
+              "autoFailoverEnabled": false,
+              "numOfShards": 3,
+              "numOfReplicas": 2
+            },
+            "clusterSetting": {
+              "clusterName": "clusterindunil",
+              "clusterDescription": "indu",
+              "port": 6379
+            },
+            "vpcSpec": {
+              "vpcType": "EXISTING",
+              "existingVPC": {
+                "vpcID": "vpc-01da161ded73d5eb8",
+                "subNetID": "subnet-0bde122c9b5c3d145",
+                "securityGroupID": "sg-054f5426266a15f7e"
+              },
+              "newVPC": {
+                "vpcName": "",
+                "vpcIPv4CIDR": "10.0.0.0/16",
+                "subnetName": "",
+                "subnetIPv4CIDR": "10.0.0.0/20"
+              }
+            },
+            "host": "",
+            "doesExist": false,
+            "alreadyDeployed": false,
+            "redisClient": "",
+            "external": false
+          },
+          "clusterResources": [],
+          "editMode": false,
+          "enableInject": true,
+          "isGlobalEditMode": false,
+          "isClusterSelectionValid": true,
+          "isNewFromGlobal": false,
+          "mode": 0,
+          "operation": {
+            "str": "REDIS_TYPE",
+            "operation": "type",
+            "displayName": "TYPE",
+            "type": {
+              "str": "REDIS_KEYS",
+              "type": "keys",
+              "displayName": "KEYS"
+            }
+          },
+          "params": [],
+          "projectRegion": "eu-west-1",
+          "reusableMode": false,
+          "showOperations": true,
+          "validator": {
+            "validatableFields": {},
+            "validity": true
+          }
+        }
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": null
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "slappforge-sdk-redis": {
+          "name": "slappforge-sdk-redis",
+          "language": "javascript",
+          "version": "0.0.3",
+          "dev": false,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "testElastic",
+    "projectDescription": "indunnn",
+    "projectVersion": "1.0.0",
+    "projectRegion": "eu-west-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1568182200356
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "testElastic",
+      "url": "https://github.com/Indunil1992/testElastic"
+    }
+  }
+}
