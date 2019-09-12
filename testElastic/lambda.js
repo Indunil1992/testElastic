@@ -4,9 +4,12 @@ const redis = new SL_REDIS.Redis(clusterManager);
 
 exports.handler = function (event, context, callback) {
     // You must always quit the redis client after it's used
-    redis.get({
+    redis.rename({
         clusterIdentifier: 'internal-cluster',
-        params: ['1']
+        params: [{
+            key: 'test',
+            name: '123'
+        }]
     }, function (error, response, redisClient) {
         if (error) {
             callback(error);
