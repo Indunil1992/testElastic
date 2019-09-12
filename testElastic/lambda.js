@@ -4,17 +4,17 @@ const redis = new SL_REDIS.Redis(clusterManager);
 
 exports.handler = function (event, context, callback) {
     // You must always quit the redis client after it's used
-    redis.type({
-        clusterIdentifier: 'clusterindunil',
+    redis.get({
+        clusterIdentifier: 'internal-cluster',
         params: ['1']
     }, function (error, response, redisClient) {
         if (error) {
-            console.log("errorrr");
-             console.log(error);
+            console.log(error);
+            console.log("errrrr");
             callback(error);
         } else {
-             console.log("redisClient");
-             console.log(redisClient);
+            console.log(redisClient);
+            console.log("redddddddd");
             //redisClient.quit();
         }
     });

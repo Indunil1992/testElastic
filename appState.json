@@ -1,29 +1,29 @@
 {
   "EDITOR_STATE": {
     "allProjectFiles": {
-      "940282dd-ad85-40c0-a63a-37032dcc6970": {
-        "id": "940282dd-ad85-40c0-a63a-37032dcc6970",
+      "cc9af2cf-6a2b-46f5-9a2d-82c0d7c74419": {
+        "id": "cc9af2cf-6a2b-46f5-9a2d-82c0d7c74419",
         "parent": null,
         "name": "testElastic",
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "85638c52-b676-47f3-8ad9-f8e75f244e0b",
-          "dcbe1561-c152-44bc-942a-730e5eb05d38"
+          "3681b18b-2887-4e2b-afb1-909e5d2d9558",
+          "a02cc7e5-56b3-4127-b21d-4f65da4a6912"
         ],
         "isRemovable": false,
         "filePath": "testElastic"
       },
-      "85638c52-b676-47f3-8ad9-f8e75f244e0b": {
-        "id": "85638c52-b676-47f3-8ad9-f8e75f244e0b",
-        "parent": "940282dd-ad85-40c0-a63a-37032dcc6970",
+      "3681b18b-2887-4e2b-afb1-909e5d2d9558": {
+        "id": "3681b18b-2887-4e2b-afb1-909e5d2d9558",
+        "parent": "cc9af2cf-6a2b-46f5-9a2d-82c0d7c74419",
         "name": "lambda.js",
         "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "testElastic/lambda.js",
-        "code": "let SL_REDIS = require('slappforge-sdk-redis');\nlet clusterManager = require('./ClusterManager');\nconst redis = new SL_REDIS.Redis(clusterManager);\n\nexports.handler = function (event, context, callback) {\n    // You must always quit the redis client after it's used\n    redis.type({\n        clusterIdentifier: 'clusterindunil',\n        params: ['1']\n    }, function (error, response, redisClient) {\n        if (error) {\n            console.log(\"errorrr\");\n             console.log(error);\n            callback(error);\n        } else {\n             console.log(\"redisClient\");\n             console.log(redisClient);\n            //redisClient.quit();\n        }\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "code": "let SL_REDIS = require('slappforge-sdk-redis');\nlet clusterManager = require('./ClusterManager');\nconst redis = new SL_REDIS.Redis(clusterManager);\n\nexports.handler = function (event, context, callback) {\n    // You must always quit the redis client after it's used\n    redis.get({\n        clusterIdentifier: 'internal-cluster',\n        params: ['1']\n    }, function (error, response, redisClient) {\n        if (error) {\n            console.log(error);\n            console.log(\"errrrr\");\n            callback(error);\n        } else {\n            console.log(redisClient);\n            console.log(\"redddddddd\");\n            //redisClient.quit();\n        }\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -31,89 +31,54 @@
           "memory": 128,
           "layers": []
         },
-        "triggers": [
-          {
-            "resourceName": "apigeuWest1IrelandIndunilindunilirelandany",
-            "config": {}
-          }
-        ]
+        "triggers": []
       },
-      "dcbe1561-c152-44bc-942a-730e5eb05d38": {
-        "id": "dcbe1561-c152-44bc-942a-730e5eb05d38",
-        "parent": "940282dd-ad85-40c0-a63a-37032dcc6970",
+      "a02cc7e5-56b3-4127-b21d-4f65da4a6912": {
+        "id": "a02cc7e5-56b3-4127-b21d-4f65da4a6912",
+        "parent": "cc9af2cf-6a2b-46f5-9a2d-82c0d7c74419",
         "name": "ClusterManager.js",
         "type": "JS_FILE",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
         "filePath": "testElastic/ClusterManager.js",
-        "code": "module.exports = function() {\n    this.clusters = [];\n\n    this.clusters[\"clusterindunil\"] = {\n        host: process.env.EndPoint_redisClusterindunil,\n        port: 6379,\n        clusterModeEnabled: false\n    };\n};"
+        "code": "module.exports = function() {\n    this.clusters = [];\n\n    this.clusters[\"internal-cluster\"] = {\n        host: \"internal-cluster.y6jiqb.clustercfg.use1.cache.amazonaws.com\",\n        port: 6379,\n        clusterModeEnabled: true\n    };\n};"
       }
     },
-    "rootNode": "940282dd-ad85-40c0-a63a-37032dcc6970",
+    "rootNode": "cc9af2cf-6a2b-46f5-9a2d-82c0d7c74419",
     "openFiles": [
-      "85638c52-b676-47f3-8ad9-f8e75f244e0b"
+      "3681b18b-2887-4e2b-afb1-909e5d2d9558"
     ],
-    "currentFileId": "85638c52-b676-47f3-8ad9-f8e75f244e0b",
+    "currentFileId": "3681b18b-2887-4e2b-afb1-909e5d2d9558",
     "resources": {
-      "apigeuWest1IrelandIndunilindunilirelandany": {
-        "name": "apigeuWest1IrelandIndunilindunilirelandany",
-        "type": "API_GATEWAY",
-        "config": {
-          "selectedRegion": "eu-west-1",
-          "apiMode": 0,
-          "apiName": "IrelandIndunil",
-          "endpointType": "REGIONAL",
-          "resourceMode": 0,
-          "resourceName": "indunil/ireland",
-          "resourcePath": "/indunil/ireland",
-          "restMethod": "ANY",
-          "proxyIntegration": false,
-          "enableCORS": false,
-          "stageMode": 0,
-          "stageName": "Test",
-          "mode": 0
-        }
-      },
-      "redis-clusterindunil": {
-        "name": "redis-clusterindunil",
+      "redis-internal-cluster": {
+        "name": "redis-internal-cluster",
         "type": "Redis",
         "config": {
           "clusterConfig": {
             "engineType": "redis",
             "clusterSpec": {
-              "instanceFamily": "t2",
-              "nodeTypeClass": "cache.t2.micro",
+              "instanceFamily": "m3",
+              "deployedInstanceFamily": "m3",
               "engineVersion": "5.0.4",
-              "clusterModeEnabled": false,
-              "autoFailoverEnabled": false,
+              "deployedEngineVersion": "5.0.4",
+              "nodeTypeClass": "cache.m3.medium",
+              "deployedNodeTypeClass": "cache.m3.medium",
+              "clusterModeEnabled": true,
+              "autoFailoverEnabled": "enabled",
               "numOfShards": 3,
               "numOfReplicas": 2
             },
             "clusterSetting": {
-              "clusterName": "clusterindunil",
-              "clusterDescription": "indu",
+              "clusterName": "internal-cluster",
+              "clusterDescription": "blaa",
               "port": 6379
             },
-            "vpcSpec": {
-              "vpcType": "EXISTING",
-              "existingVPC": {
-                "vpcID": "vpc-01da161ded73d5eb8",
-                "subNetID": "subnet-0bde122c9b5c3d145",
-                "securityGroupID": "sg-054f5426266a15f7e"
-              },
-              "newVPC": {
-                "vpcName": "",
-                "vpcIPv4CIDR": "10.0.0.0/16",
-                "subnetName": "",
-                "subnetIPv4CIDR": "10.0.0.0/20"
-              }
-            },
-            "host": "",
-            "doesExist": false,
-            "alreadyDeployed": false,
-            "redisClient": "",
-            "external": false
+            "host": "internal-cluster.y6jiqb.clustercfg.use1.cache.amazonaws.com",
+            "doesExist": true,
+            "alreadyDeployed": true,
+            "external": true,
+            "redisClient": ""
           },
           "clusterResources": [],
           "editMode": false,
@@ -121,19 +86,19 @@
           "isGlobalEditMode": false,
           "isClusterSelectionValid": true,
           "isNewFromGlobal": false,
-          "mode": 0,
+          "mode": 1,
           "operation": {
-            "str": "REDIS_TYPE",
-            "operation": "type",
-            "displayName": "TYPE",
+            "str": "REDIS_GET",
+            "operation": "get",
+            "displayName": "GET",
             "type": {
-              "str": "REDIS_KEYS",
-              "type": "keys",
-              "displayName": "KEYS"
+              "str": "REDIS_STRINGS",
+              "type": "strings",
+              "displayName": "STRINGS"
             }
           },
           "params": [],
-          "projectRegion": "eu-west-1",
+          "projectRegion": "us-east-1",
           "reusableMode": false,
           "showOperations": true,
           "validator": {
@@ -171,12 +136,12 @@
   },
   "PROJECT_META": {
     "projectName": "testElastic",
-    "projectDescription": "indunnn",
+    "projectDescription": "",
     "projectVersion": "1.0.0",
-    "projectRegion": "eu-west-1",
+    "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1568182200356
+    "lastSave": 1568274359587
   },
   "VCS_STATE": {
     "provider": "GitHub",
