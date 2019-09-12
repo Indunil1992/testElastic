@@ -15,7 +15,7 @@ exports.handler = function (event, context, callback) {
         } else {
             console.log(redisClient);
             console.log("redddddddd");
-            //redisClient.quit();
+            redisClient.quit();
         }
     });
 
