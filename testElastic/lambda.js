@@ -9,12 +9,8 @@ exports.handler = function (event, context, callback) {
         params: ['1']
     }, function (error, response, redisClient) {
         if (error) {
-            console.log(error);
-            console.log("errrrr");
             callback(error);
         } else {
-            console.log(redisClient);
-            console.log("redddddddd");
             redisClient.quit();
         }
     });
